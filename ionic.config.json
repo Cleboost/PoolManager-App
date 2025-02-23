@@ -1,7 +1,0 @@
-{
-  "name": "Pool Manager",
-  "integrations": {
-    "capacitor": {}
-  },
-  "type": "vue-vite"
-}
