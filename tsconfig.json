@@ -13,5 +13,5 @@
     "**/*.tsx",
     ".expo/types/**/*.ts",
     "expo-env.d.ts"
-, "app/_layout.tsx.disable", "app/+not-found.tsx.disable"  ]
+, "app/_layout.tsx.disable", "app/+not-found.tsx.disable", "app/index.tsx.back"  ]
 }
