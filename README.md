@@ -1,50 +1,87 @@
-# Welcome to your Expo app 👋
+# PoolManager App
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Application de gestion de piscine avec contrôle de température et de pompe via WebSocket.
 
-## Get started
+## 🚀 Développement
 
-1. Install dependencies
+### Prérequis
+- Node.js 18+
+- Bun (gestionnaire de paquets)
+- Android Studio (pour le build Android)
 
-   ```bash
-   npm install
-   ```
-
-2. Start the app
-
-   ```bash
-    npx expo start
-   ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
+### Installation
 ```bash
-npm run reset-project
+# Installer les dépendances
+bun install
+
+# Démarrer le serveur de développement
+bun run dev
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+## 📱 Build Android
 
-## Learn more
+### 1. Build et synchronisation
+```bash
+# Construire l'application web et synchroniser avec Android
+bun run build:android
+```
 
-To learn more about developing your project with Expo, look at the following resources:
+### 2. Ouvrir dans Android Studio
+```bash
+# Ouvrir le projet Android dans Android Studio
+bun run open:android
+```
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+### 3. Build et installation sur appareil
+Dans Android Studio :
+1. Connecter votre appareil Android ou démarrer un émulateur
+2. Cliquer sur "Run" (bouton play vert)
+3. Sélectionner votre appareil/émulateur
+4. L'application sera installée et lancée automatiquement
 
-## Join the community
+### 4. Build APK de production
+Dans Android Studio :
+1. Menu `Build` → `Build Bundle(s) / APK(s)` → `Build APK(s)`
+2. L'APK sera généré dans `android/app/build/outputs/apk/debug/`
 
-Join our community of developers creating universal apps.
+## 🔧 Configuration
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+### Capacitor
+- **App ID**: `com.cleboost.poolmanager`
+- **App Name**: `PoolManager`
+- **Web Directory**: `dist`
+
+### WebSocket
+- **Port**: 81
+- **Format messages**: 
+  - Température eau: `GTWxx`
+  - Température air: `GTAxx`
+  - Mode pompe: `GMDx` (0=off, 1=on, 2=auto)
+
+## 📋 Fonctionnalités
+
+- ✅ Découverte automatique des piscines sur le réseau
+- ✅ Connexion WebSocket en temps réel
+- ✅ Affichage des températures (eau/air)
+- ✅ Contrôle de la pompe (Marche/Arrêt/Auto)
+- ✅ Sauvegarde des préférences
+- ✅ Interface responsive
+
+## 🛠️ Scripts utiles
+
+```bash
+# Build complet pour Android
+bun run build:android
+
+# Ouvrir Android Studio
+bun run open:android
+
+# Lancer sur appareil connecté
+bun run run:android
+
+# Linter
+bun run lint
+
+# Tests
+bun run test
+```

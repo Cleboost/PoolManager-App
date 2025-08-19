@@ -1,6 +1,6 @@
 #include <WiFi.h>
 #include <ESPmDNS.h>
-#include <WebSocketsServer.h>
+#include <WebSocketsServer.h> //https://github.com/Links2004/arduinoWebSockets
 
 const char *ssid = "TP-Link_8540";
 const char *password = "57971742";
@@ -9,13 +9,11 @@ WebSocketsServer webSocket = WebSocketsServer(81);
 
 const int led = 13;
 
-// Structure pour stocker les paires clé-valeur pour les commandes
 struct Command {
   const char* path;
   const char* cmd;
 };
 
-// Tableau de structures pour les commandes
 const Command commands[] = {
   {"/pompe/on", "SMO"},
   {"/pompe/off", "SMF"},
@@ -24,7 +22,29 @@ const Command commands[] = {
   {"/temp/water", "GTW"},
   {"/temp/tendance", "GBS"},
   {"/pompe/mode", "GMD"},
-  {"/pompe/status", "GST"}
+  {"/pompe/status", "GST"},
+  //Get time slot
+  {"/slot/0", "GTS0"},
+  {"/slot/1", "GTS1"},
+  {"/slot/2", "GTS2"},
+  {"/slot/3", "GTS3"},
+  {"/slot/4", "GTS4"},
+  {"/slot/5", "GTS5"},
+  //Set time slot +
+  {"/slot/0/add", "STS0+"},
+  {"/slot/1/add", "STS1+"},
+  {"/slot/2/add", "STS2+"},
+  {"/slot/3/add", "STS3+"},
+  {"/slot/4/add", "STS4+"},
+  {"/slot/5/add", "STS5+"},
+  //Set time slot -
+  {"/slot/0/sub", "STS0-"},
+  {"/slot/1/sub", "STS1-"},
+  {"/slot/2/sub", "STS2-"},
+  {"/slot/3/sub", "STS3-"},
+  {"/slot/4/sub", "STS4-"},
+  {"/slot/5/sub", "STS5-"},
+  {"/errors", "GER"}
 };
 
 void sendCmd(const char* cmd) {
@@ -39,14 +59,13 @@ void readAndSendSerialData() {
 
   while (Serial.available() > 0) {
     char c = Serial.read();
-    if (c == 2) { // Start marker
+    if (c == 2) { 
       recording = true;
-      data = ""; // Reset data buffer
-    } else if (c == 3 && recording) { // End marker
+      data = "";
+    } else if (c == 3 && recording) {
       recording = false;
-      // Send data to all connected WebSocket clients
       webSocket.broadcastTXT(data);
-      data = ""; // Reset data buffer after sending
+      data = "";
     } else if (recording) {
       data += c;
     }
@@ -65,8 +84,6 @@ void webSocketEvent(uint8_t num, WStype_t type, uint8_t * payload, size_t length
     case WStype_TEXT:
       {
         String message = String((char*)payload);
-        
-        // Check if the message matches any command
         for (const Command& command : commands) {
           if (message == command.path) {
             sendCmd(command.cmd);
@@ -89,7 +106,6 @@ void setup(void) {
   WiFi.mode(WIFI_STA);
   WiFi.begin(ssid, password);
 
-  // Wait for connection
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
   }
@@ -98,7 +114,6 @@ void setup(void) {
     Serial.println("MDNS responder started");
   }
 
-  // Start WebSocket server
   webSocket.begin();
   webSocket.onEvent(webSocketEvent);
 }

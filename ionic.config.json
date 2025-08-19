@@ -1,0 +1,7 @@
+{
+  "name": "pool-manager",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react-vite"
+}
