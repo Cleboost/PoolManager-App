@@ -36,7 +36,7 @@ dependencies:
   cupertino_icons: ^1.0.8
   
   # WebSocket pour la communication avec les piscines
-  web_socket_channel: ^2.4.0
+  web_socket_channel: ^3.0.3
   
   # Scan réseau
   network_info_plus: ^4.1.0
