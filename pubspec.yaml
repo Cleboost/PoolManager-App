@@ -39,7 +39,7 @@ dependencies:
   web_socket_channel: ^3.0.3
   
   # Scan réseau
-  network_info_plus: ^4.1.0
+  network_info_plus: ^7.0.0
   
   # Permissions Android
   permission_handler: ^12.0.1
