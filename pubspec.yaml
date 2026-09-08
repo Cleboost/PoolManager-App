@@ -42,7 +42,7 @@ dependencies:
   network_info_plus: ^8.2.1
   
   # Permissions Android
-  permission_handler: ^13.0.0
+  permission_handler: ^13.0.2
   
   # Stockage persistant
   shared_preferences: ^2.5.5
